@@ -7,19 +7,33 @@ public class Bed : MonoBehaviour
     [Header("Side Info")]
     public InToBed inToBed;
 
+    [Header("Player Info")]
+    public GameObject flashlight;
+    public PlayerMovement playerMovement;
+    public MouseLook mouseLook;
+
     [Header("Camera Info")]
     public Camera mainCamera;
     public Camera bedCamera;
     public Animator fade;
+    public Animator cameraChanger;
 
     public Animator eyes;
+    public Animator bedSheet;
 
-    public bool getIntoBed = false;
-    public bool inBed = false;
-    public bool cantGetOut = false;
-    public bool closing = true;
-    public bool opening = false;
+    private bool getIntoBed = false;
+    private bool inBed = false;
+    private bool cantGetOut = false;
+    private bool closing = true;
+    private bool opening = false;
 
+    private BoxCollider boxCol;
+
+
+    private void Start()
+    {
+        boxCol = GetComponent<BoxCollider>();
+    }
     private void Update()
     {
         CloseEyes();
@@ -41,7 +55,6 @@ public class Bed : MonoBehaviour
                 StartCoroutine(OutBed());
             }
         }
-
     }
 
     public void OnMouseDown()
@@ -103,22 +116,32 @@ public class Bed : MonoBehaviour
 
     private IEnumerator InBed()
     {
+        boxCol.enabled = false;
+        cameraChanger.Play("Cam 2");
+        mouseLook.enabled = false;
+        playerMovement.enabled = false;
+        flashlight.SetActive(false);
+        bedSheet.Play("BedSheetClose");
         cantGetOut = true;
         inBed = true;
-        fade.Play(0);
+        fade.Play("Fade");
         yield return new WaitForSeconds(1f);
-        mainCamera.enabled = false;
-        bedCamera.enabled = true; 
         yield return new WaitForSeconds(1f);
         cantGetOut = false;
     }
 
     private IEnumerator OutBed()
     {
+        cameraChanger.Play("CameraChange");
+        bedSheet.Play("BedSheetOpen");
         inBed = false;
-        fade.Play(0);
+        fade.Play("Fade");
         yield return new WaitForSeconds(1f);
-        bedCamera.enabled = false;
-        mainCamera.enabled = true;
+        flashlight.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        bedSheet.Play("BedSheetOpenUp");
+        playerMovement.enabled = true;
+        mouseLook.enabled = true;
+        boxCol.enabled = true;
     }
 }
