@@ -12,15 +12,23 @@ public class Window : MonoBehaviour
     public PlayerMovement playermovement;
     public MouseLook playerLook;
     public GameObject flashlight;
+    public GameObject hand;
+    public Animator handAnim;
 
     [Header("Camera")]
     public Animator cameraChanger;
+    public string camName;
 
     [Header("Window")]
     public BoxCollider boxCol;
+    public string handAnimName;
+    private bool windowIsOpen = false;
+    public float timerUntillKill;
 
-    [Header("Canvas")]
-    public Animator fade;
+    [Header("Monster")]
+    public Animator monster;
+    public string animIn;
+    public string animOut;
 
     public bool movementEnabled = false;
 
@@ -31,6 +39,9 @@ public class Window : MonoBehaviour
 
     void Update()
     {
+        CheckWindow();
+        Kill();
+
         if (movementEnabled)
         {
             WindowClose();
@@ -47,11 +58,35 @@ public class Window : MonoBehaviour
         }
     }
 
+    private void CheckWindow()
+    {
+        if (windowIsOpen == true)
+        {
+            monster.Play(animIn);
+            timerUntillKill += Time.deltaTime;
+        }
+        else if (windowIsOpen == false)
+        {
+            monster.Play(animOut);
+        }
+    }
+
+    private void Kill()
+    {
+        if (timerUntillKill >= 15)
+        {
+            timerUntillKill = 0;
+            Debug.Log("Ur DED window");
+        }
+    }
+
     private void WindowIsPulledDown()
     {
         if (transform.localPosition.y <= 0.3f)
         {
+            windowIsOpen = false;
             activateWindow = false;
+            timerUntillKill = 0;
             StartCoroutine(OutWindow());
         }
     }
@@ -64,6 +99,7 @@ public class Window : MonoBehaviour
         }
         else if (transform.localPosition.y <= 0.7f)
         {
+            windowIsOpen = true;
             rb.velocity = transform.forward * speed;
         }
 
@@ -86,25 +122,26 @@ public class Window : MonoBehaviour
 
     public IEnumerator GoToWindow()
     {
-        cameraChanger.Play("Cam 3");
+        hand.SetActive(true);
+        cameraChanger.Play(camName);
         flashlight.SetActive(false);
         playerLook.enabled = false;
         boxCol.enabled = false;
         playermovement.enabled = false;
-        fade.Play("FastFade");
         yield return new WaitForSeconds(0.5f);
         movementEnabled = true;
     }
 
     public IEnumerator OutWindow()
     {
+        handAnim.Play(handAnimName);
         cameraChanger.Play("CameraChange");
         movementEnabled = false;
-        fade.Play("FastFade");
         yield return new WaitForSeconds(0.5f);
         playermovement.enabled = true;
         playerLook.enabled = true;
         boxCol.enabled = true;
         flashlight.SetActive(true);
+        hand.SetActive(false);
     }
 }

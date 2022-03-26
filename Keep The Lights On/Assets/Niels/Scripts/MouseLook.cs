@@ -16,4 +16,10 @@ public class MouseLook : MonoBehaviour
     {
         body.transform.rotation = Quaternion.Euler(Quaternion.identity.x, transform.eulerAngles.y, Quaternion.identity.z);
     }
+
+    private void OnDrawGizmos()
+    {
+        Vector3 forward = transform.TransformDirection(Vector3.forward) * 4;
+        Debug.DrawRay(transform.position, forward, Color.blue);
+    }
 }

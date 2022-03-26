@@ -21,7 +21,6 @@ public class Lamps : MonoBehaviour
 
         if (chosen)
         {
-            Debug.Log("yes");
             lamps[current].SetActive(false);
             lamps.RemoveAt(current);
             chosen = false;

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Bed : MonoBehaviour
 {
+    [Header("eyeClose Info")]
+    public float timeEyesAreClosed;
+    private bool eyesClosed = false;
+
     [Header("Side Info")]
     public InToBed inToBed;
 
@@ -14,18 +18,20 @@ public class Bed : MonoBehaviour
 
     [Header("Camera Info")]
     public Camera mainCamera;
-    public Camera bedCamera;
     public Animator fade;
     public Animator cameraChanger;
 
+    [Header("Bed")]
     public Animator eyes;
     public Animator bedSheet;
 
     private bool getIntoBed = false;
     private bool inBed = false;
     private bool cantGetOut = false;
-    private bool closing = true;
-    private bool opening = false;
+    private bool closing = false;
+    private bool opening = true;
+    public bool underBlanket = false;
+    private bool usable = true;
 
     private BoxCollider boxCol;
 
@@ -38,6 +44,12 @@ public class Bed : MonoBehaviour
     {
         CloseEyes();
         OpenEyes();
+        UnderBlanket();
+
+        if (eyesClosed == true)
+        {
+            timeEyesAreClosed += Time.deltaTime;
+        }
 
         if (inToBed.intoBed == true)
         {
@@ -48,7 +60,7 @@ public class Bed : MonoBehaviour
             getIntoBed = false;
         }
 
-        if (inBed == true && cantGetOut == false)
+        if (inBed == true && cantGetOut == false && underBlanket == false)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -72,9 +84,33 @@ public class Bed : MonoBehaviour
         }
     }
 
+    #region Blanket state
+    private void UnderBlanket()
+    {
+        if (inBed == true && opening == true)
+        {
+            if (underBlanket == false && usable == true)
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    StartCoroutine(UnderBlanketIn());
+                }
+            }
+            else if (underBlanket == true && usable == true)
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    StartCoroutine(UnderBlanketOut());
+                }
+            }
+        }
+    }
+    #endregion
+
+    #region eye state
     private void CloseEyes()
     {
-        if (inBed && opening == true)
+        if (inBed && opening == true && underBlanket == false)
         {
             if (Input.GetKeyDown(KeyCode.G))
             {
@@ -95,12 +131,15 @@ public class Bed : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region eyes
     private IEnumerator CloseEyesNow()
     {
         cantGetOut = true;
         eyes.Play("EyesClose");
         yield return new WaitForSeconds(2f);
+        eyesClosed = true;
         opening = false;
         closing = true;
     }    
@@ -108,12 +147,15 @@ public class Bed : MonoBehaviour
     private IEnumerator OpenEyesNow()
     {
         eyes.Play("EyesOpen");
+        eyesClosed = false;
         yield return new WaitForSeconds(2f);
         closing = false;
         opening = true;
         cantGetOut = false;
     }
+    #endregion
 
+    #region bed
     private IEnumerator InBed()
     {
         boxCol.enabled = false;
@@ -144,4 +186,27 @@ public class Bed : MonoBehaviour
         mouseLook.enabled = true;
         boxCol.enabled = true;
     }
+    #endregion
+
+    #region blanket
+    private IEnumerator UnderBlanketIn()
+    {
+        bedSheet.Play("UnderBlanket");
+        fade.Play("FastFade");
+        usable = false;
+        yield return new WaitForSeconds(1);
+        underBlanket = true;
+        usable = true;
+    }
+
+    private IEnumerator UnderBlanketOut()
+    {
+        bedSheet.Play("UnderBlanketOut");
+        fade.Play("FastFadeOut");
+        usable = false;
+        yield return new WaitForSeconds(1);
+        underBlanket = false;
+        usable = true;
+    }
+    #endregion
 }
