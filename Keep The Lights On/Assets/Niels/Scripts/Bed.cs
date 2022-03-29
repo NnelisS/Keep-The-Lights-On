@@ -15,6 +15,7 @@ public class Bed : MonoBehaviour
     public GameObject flashlight;
     public PlayerMovement playerMovement;
     public MouseLook mouseLook;
+    public GameObject furLight;
 
     [Header("Camera Info")]
     public Camera mainCamera;
@@ -24,6 +25,7 @@ public class Bed : MonoBehaviour
     [Header("Bed")]
     public Animator eyes;
     public Animator bedSheet;
+    public float timeUnderBlanket;
 
     [Header("Canvas")]
     public GameObject bedIcon;
@@ -42,12 +44,26 @@ public class Bed : MonoBehaviour
     private void Start()
     {
         boxCol = GetComponent<BoxCollider>();
+        StartCoroutine(InBed());
     }
     private void Update()
     {
         CloseEyes();
         OpenEyes();
         UnderBlanket();
+
+        if (underBlanket == true)
+        {
+            timeUnderBlanket += Time.deltaTime;
+        }
+        else if (underBlanket == false)
+        {
+            timeUnderBlanket = 0;
+        }
+        if (timeUnderBlanket >= 10)
+        {
+            Debug.Log("Ur DED blanket");
+        }
 
         if (eyesClosed == true)
         {
@@ -188,6 +204,8 @@ public class Bed : MonoBehaviour
         inBed = true;
         fade.Play("Fade");
         yield return new WaitForSeconds(1f);
+        bedSheet.Play("BedSheetOpenClose");
+        furLight.SetActive(true);
         yield return new WaitForSeconds(1f);
         cantGetOut = false;
     }
@@ -200,6 +218,7 @@ public class Bed : MonoBehaviour
         fade.Play("Fade");
         yield return new WaitForSeconds(1f);
         flashlight.SetActive(true);
+        furLight.SetActive(false);
         yield return new WaitForSeconds(1f);
         bedSheet.Play("BedSheetOpenUp");
         playerMovement.enabled = true;

@@ -13,6 +13,9 @@ public class WorldTime : MonoBehaviour
     public bool switchTimer = false;
     public bool turnOnTimer = true;
 
+    [Header("info")]
+    public Bed eyeInfo;
+
     public TextMeshPro timeText;
 
     void Start()
@@ -27,6 +30,14 @@ public class WorldTime : MonoBehaviour
             beginTime += Time.deltaTime;
         }
         DisplayTime(beginTime, endTime);
+
+        if (beginTime == endTime)
+        {
+            if (eyeInfo.timeEyesAreClosed >= 120)
+            {
+                Debug.Log("you win");
+            }
+        }
     }
 
     #region Display Time

@@ -8,6 +8,16 @@ public class LampPickup : MonoBehaviour
     public Transform player;
     public Inventory playerInventory;
 
+    public GameObject pickupIcon;
+
+    private void Update()
+    {
+        if (playerInventory.hasLightBulb == true)
+        {
+            pickupIcon.SetActive(false);
+        }
+    }
+
     private void OnMouseDown()
     {
         if (Mathf.Abs(Vector3.Distance(this.transform.position, player.position)) < 3)
@@ -20,7 +30,7 @@ public class LampPickup : MonoBehaviour
     {
         if (Mathf.Abs(Vector3.Distance(this.transform.position, player.position)) < 3)
         {
-            Debug.Log("Inside");
+            pickupIcon.SetActive(true);
         }
     }
 
@@ -28,7 +38,7 @@ public class LampPickup : MonoBehaviour
     {
         if (Mathf.Abs(Vector3.Distance(this.transform.position, player.position)) < 3)
         {
-            Debug.Log("Inside");
+            pickupIcon.SetActive(false);
         }
     }
 }

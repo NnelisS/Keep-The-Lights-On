@@ -89,7 +89,7 @@ public class Window : MonoBehaviour
 
     private void Kill()
     {
-        if (timerUntillKill >= 15)
+        if (timerUntillKill >= 30)
         {
             timerUntillKill = 0;
             Debug.Log("Ur DED window");
