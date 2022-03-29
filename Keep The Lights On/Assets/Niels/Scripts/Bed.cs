@@ -25,6 +25,9 @@ public class Bed : MonoBehaviour
     public Animator eyes;
     public Animator bedSheet;
 
+    [Header("Canvas")]
+    public GameObject bedIcon;
+
     private bool getIntoBed = false;
     private bool inBed = false;
     private bool cantGetOut = false;
@@ -81,6 +84,22 @@ public class Bed : MonoBehaviour
         else if (getIntoBed == true)
         {
 
+        }
+    }
+
+    private void OnMouseEnter()
+    {
+        if (getIntoBed == true && inBed == false)
+        {
+            bedIcon.SetActive(true);
+        }
+    }
+
+    private void OnMouseExit()
+    {
+        if (getIntoBed == true && inBed == false)
+        {
+            bedIcon.SetActive(false);
         }
     }
 
@@ -159,6 +178,7 @@ public class Bed : MonoBehaviour
     private IEnumerator InBed()
     {
         boxCol.enabled = false;
+        bedIcon.SetActive(false);
         cameraChanger.Play("Cam 2");
         mouseLook.enabled = false;
         playerMovement.enabled = false;

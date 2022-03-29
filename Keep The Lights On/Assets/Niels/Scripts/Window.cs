@@ -20,6 +20,8 @@ public class Window : MonoBehaviour
     public string camName;
 
     [Header("Window")]
+    public Cloth leftCloth;
+    public Cloth RightCloth;
     public BoxCollider boxCol;
     public string handAnimName;
     private bool windowIsOpen = false;
@@ -30,17 +32,31 @@ public class Window : MonoBehaviour
     public string animIn;
     public string animOut;
 
+    private RandomizeSytem randomizeSystem;
+
     public bool movementEnabled = false;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        randomizeSystem = FindObjectOfType<RandomizeSytem>();
     }
 
     void Update()
     {
         CheckWindow();
         Kill();
+
+        if (activateWindow)
+        {
+            leftCloth.externalAcceleration = new Vector3(0, 0, 4);
+            RightCloth.externalAcceleration = new Vector3(0, 0, -4);
+        }
+        else if (activateWindow == false)
+        {
+            leftCloth.externalAcceleration = new Vector3(0, 0, 0);
+            RightCloth.externalAcceleration = new Vector3(0, 0, 0);
+        }
 
         if (movementEnabled)
         {
@@ -87,6 +103,7 @@ public class Window : MonoBehaviour
             windowIsOpen = false;
             activateWindow = false;
             timerUntillKill = 0;
+            randomizeSystem.events.Add(this.GetComponent<Events>());
             StartCoroutine(OutWindow());
         }
     }

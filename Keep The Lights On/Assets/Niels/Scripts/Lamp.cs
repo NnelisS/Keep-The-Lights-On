@@ -14,21 +14,62 @@ public class Lamp : MonoBehaviour
 
     [Header("Player")]
     public Transform player;
+    public Inventory playerInventory;
+
+    public float destroyCurrent;
+    public bool destroyLamp = false;
+    public bool chosenIfDestroy = true;
+
+    public float timerUntillKill;
+
+    private RandomizeSytem randomizeSystem;
 
     void Start()
     {
         lampsScript = FindObjectOfType<Lamps>();
+        randomizeSystem = FindObjectOfType<RandomizeSytem>();
+    }
+
+    private void Update()
+    {
+        ChoosIfLampBreak();
+    }
+
+    public void ChoosIfLampBreak()
+    {
+        if (!lamp.activeInHierarchy)
+        {
+            timerUntillKill += Time.deltaTime;
+            if (chosenIfDestroy)
+            {
+                destroyCurrent = Random.Range(0, 3);
+                chosenIfDestroy = false;
+            }
+
+            if (timerUntillKill >= 25)
+            {
+                Debug.Log("Ur DED Lamp");
+            }
+        }
+        else
+        {
+            timerUntillKill = 0;
+        }
+
+        if (destroyCurrent == 1)
+        {
+            destroyLamp = true;
+        }
     }
 
     private void OnMouseEnter()
     {
         if (Mathf.Abs(Vector3.Distance(this.transform.position, player.position)) < 4)
         {
-            see.SetActive(true);
-        }
-        else
-        {
-            see.SetActive(false);
+            if (!lamp.activeInHierarchy)
+            {
+                see.SetActive(true);
+            }
         }
     }
 
@@ -39,20 +80,22 @@ public class Lamp : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!lamp.activeInHierarchy)
+        if (Mathf.Abs(Vector3.Distance(this.transform.position, player.position)) < 5)
         {
-            lamp.SetActive(true);
-            lampsScript.lamps.Add(lamp);
+            if (playerInventory.hasLightBulb == true)
+            {
+                destroyLamp = false;
+                playerInventory.hasLightBulb = false;
+            }
+
+            if (!lamp.activeInHierarchy && destroyLamp == false)
+            {
+                lamp.SetActive(true);
+                lampsScript.lamps.Add(lamp);
+                chosenIfDestroy = true;
+                see.SetActive(false);
+                randomizeSystem.events.Add(this.GetComponent<Events>());
+            }
         }
-/*        if (Mathf.Abs(Vector3.Distance(this.transform.position, player.position)) < 5)
-        {
-            Debug.Log("in distance");
-
-        }*/
     }
-
-/*    private void OnDrawGizmos()
-    {
-        Gizmos.DrawSphere(this.transform.position, 4);
-    }*/
 }

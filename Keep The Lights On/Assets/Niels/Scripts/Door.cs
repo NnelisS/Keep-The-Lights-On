@@ -16,9 +16,12 @@ public class Door : MonoBehaviour
     public float timerUntillLeave;
     public int current;
 
+    private RandomizeSytem randomizeSystem;
+
     void Start()
     {
         door = GetComponent<Animator>();
+        randomizeSystem = FindObjectOfType<RandomizeSytem>();
     }
 
     void Update()
@@ -65,12 +68,13 @@ public class Door : MonoBehaviour
             timerUntillLeave = 0;
             timerUntillKill = 0;
             activateDoorOpen = false;
+            randomizeSystem.events.Add(this.GetComponent<Events>());
         }
     }
 
     private void Kill()
     {
-        if (timerUntillKill >= 10)
+        if (timerUntillKill >= 20)
         {
             timerUntillKill = 0;
             Debug.Log("ur DED");
