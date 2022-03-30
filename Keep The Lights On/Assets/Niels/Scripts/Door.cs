@@ -16,6 +16,10 @@ public class Door : MonoBehaviour
     public float timerUntillLeave;
     public int current;
 
+    [Header("Sound")]
+    public AudioSource doorCreak;
+    public AudioSource monsterBreath;
+
     private RandomizeSytem randomizeSystem;
 
     void Start()
@@ -30,12 +34,18 @@ public class Door : MonoBehaviour
 
         if (doorIsOpen)
         {
+            monsterBreath.enabled = true;   
             CheckForBlanket();
             CheckToLeave();
+        }
+        else if (doorIsOpen == false)
+        {
+            monsterBreath.enabled = false;
         }
 
         if (activateDoorOpen)
         {
+            StartCoroutine(DoorCreak());
             current = 1;
             doorIsOpen = true;
         }
@@ -80,4 +90,11 @@ public class Door : MonoBehaviour
             Debug.Log("ur DED");
         }
     }
+
+    private IEnumerator DoorCreak()
+    {
+        doorCreak.enabled = true;
+        yield return new WaitForSeconds(6);
+        doorCreak.enabled = false;
+    }    
 }

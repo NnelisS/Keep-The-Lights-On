@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Bed : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class Bed : MonoBehaviour
     public PlayerMovement playerMovement;
     public MouseLook mouseLook;
     public GameObject furLight;
+    public AudioSource footstep;
 
     [Header("Camera Info")]
     public Camera mainCamera;
@@ -29,6 +31,13 @@ public class Bed : MonoBehaviour
 
     [Header("Canvas")]
     public GameObject bedIcon;
+    public GameObject underBlanketP;
+    public Animator underBlanketAnim;
+
+    [Header("Sounds")]
+    public AudioSource blanketBreath;
+    public AudioSource lastBreath;
+    public AudioSource underBlanketAudio;
 
     private bool getIntoBed = false;
     private bool inBed = false;
@@ -51,18 +60,34 @@ public class Bed : MonoBehaviour
         CloseEyes();
         OpenEyes();
         UnderBlanket();
+        BreathingUnderBlanket();
 
         if (underBlanket == true)
         {
             timeUnderBlanket += Time.deltaTime;
+            underBlanketP.SetActive(true);
+            blanketBreath.enabled = true;
+            underBlanketAnim.Play("UnderBlanketPanel");
+            underBlanketAnim.Play("UnderBlanketPanel");
         }
         else if (underBlanket == false)
         {
-            timeUnderBlanket = 0;
+            timeUnderBlanket -= Time.deltaTime;
+            underBlanketP.SetActive(false);
+            underBlanketAnim.Play("New State");
         }
-        if (timeUnderBlanket >= 10)
+        if (timeUnderBlanket >= 9)
         {
+            blanketBreath.enabled = false;
             Debug.Log("Ur DED blanket");
+            mouseLook.enabled = false;
+            usable = false;
+
+        }
+        if (timeUnderBlanket <= 0)
+        {
+            timeUnderBlanket = 0;
+            blanketBreath.enabled = false;
         }
 
         if (eyesClosed == true)
@@ -87,6 +112,53 @@ public class Bed : MonoBehaviour
             }
         }
     }
+
+    #region breathing Blanket
+    private void BreathingUnderBlanket()
+    {
+        if (timeUnderBlanket <= 1)
+        {
+            blanketBreath.volume = Mathf.Lerp(0.0f, 1.0f, 0.1f);
+        }
+         if (timeUnderBlanket >= 2)
+        {
+            blanketBreath.volume = Mathf.Lerp(0.0f, 1.0f, 0.2f);
+        }
+         if (timeUnderBlanket >= 3)
+        {
+            blanketBreath.volume = Mathf.Lerp(0.0f, 1.0f, 0.3f);
+        }
+         if (timeUnderBlanket >= 4)
+        {
+            blanketBreath.volume = Mathf.Lerp(0.0f, 1.0f, 0.4f);
+        }
+         if (timeUnderBlanket >= 5)
+        {
+            blanketBreath.volume = Mathf.Lerp(0.0f, 1.0f, 0.5f);
+        }
+         if (timeUnderBlanket >= 6)
+        {
+            blanketBreath.volume = Mathf.Lerp(0.0f, 1.0f, 0.6f);
+        }
+         if (timeUnderBlanket >= 7)
+        {
+            blanketBreath.volume = Mathf.Lerp(0.0f, 1.0f, 0.7f);
+        }
+         if (timeUnderBlanket >= 8)
+        {
+            blanketBreath.volume = Mathf.Lerp(0.0f, 1.0f, 0.8f);
+        }
+         if (timeUnderBlanket >= 9)
+        {
+            blanketBreath.volume = Mathf.Lerp(0.0f, 1.0f, 0.9f);
+            lastBreath.enabled = true;
+        }
+        if (timeUnderBlanket >= 10)
+        {
+            blanketBreath.volume = Mathf.Lerp(0.0f, 1.0f, 1.0f);
+        }
+    }
+    #endregion
 
     public void OnMouseDown()
     {
@@ -193,6 +265,7 @@ public class Bed : MonoBehaviour
     #region bed
     private IEnumerator InBed()
     {
+        footstep.enabled = false;
         boxCol.enabled = false;
         bedIcon.SetActive(false);
         cameraChanger.Play("Cam 2");
@@ -233,9 +306,12 @@ public class Bed : MonoBehaviour
         bedSheet.Play("UnderBlanket");
         fade.Play("FastFade");
         usable = false;
+        underBlanketAudio.enabled = true;
         yield return new WaitForSeconds(1);
         underBlanket = true;
         usable = true;
+        yield return new WaitForSeconds(1);
+        underBlanketAudio.enabled = false;
     }
 
     private IEnumerator UnderBlanketOut()
@@ -243,9 +319,12 @@ public class Bed : MonoBehaviour
         bedSheet.Play("UnderBlanketOut");
         fade.Play("FastFadeOut");
         usable = false;
+        underBlanketAudio.enabled = true;
         yield return new WaitForSeconds(1);
         underBlanket = false;
         usable = true;
+        yield return new WaitForSeconds(1);
+        underBlanketAudio.enabled = false;
     }
     #endregion
 }

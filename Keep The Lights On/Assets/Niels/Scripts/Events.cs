@@ -8,7 +8,6 @@ public class Events : MonoBehaviour
     public Lamps lamps;
     public Window window;
     public Door door;
-
     void Update()
     {
         if (activateThisEvent)

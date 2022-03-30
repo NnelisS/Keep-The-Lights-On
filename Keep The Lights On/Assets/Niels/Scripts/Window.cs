@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Window : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class Window : MonoBehaviour
     public GameObject flashlight;
     public GameObject hand;
     public Animator handAnim;
+    public AudioSource footstep;
 
     [Header("Camera")]
     public Animator cameraChanger;
@@ -32,6 +34,9 @@ public class Window : MonoBehaviour
     public string animIn;
     public string animOut;
 
+    [Header("Sound")]
+    public AudioSource windowOpen;
+
     private RandomizeSytem randomizeSystem;
 
     public bool movementEnabled = false;
@@ -49,6 +54,7 @@ public class Window : MonoBehaviour
 
         if (activateWindow)
         {
+            StartCoroutine(windowOpenSound());   
             leftCloth.externalAcceleration = new Vector3(0, 0, 4);
             RightCloth.externalAcceleration = new Vector3(0, 0, -4);
         }
@@ -92,6 +98,7 @@ public class Window : MonoBehaviour
         if (timerUntillKill >= 30)
         {
             timerUntillKill = 0;
+            SceneManager.LoadScene("YouLoseWindow");
             Debug.Log("Ur DED window");
         }
     }
@@ -139,6 +146,7 @@ public class Window : MonoBehaviour
 
     public IEnumerator GoToWindow()
     {
+        footstep.enabled = false;
         hand.SetActive(true);
         cameraChanger.Play(camName);
         flashlight.SetActive(false);
@@ -160,5 +168,12 @@ public class Window : MonoBehaviour
         boxCol.enabled = true;
         flashlight.SetActive(true);
         hand.SetActive(false);
+    }
+
+    private IEnumerator windowOpenSound()
+    {
+        windowOpen.enabled = true;
+        yield return new WaitForSeconds(5);
+        windowOpen.enabled = false;
     }
 }

@@ -33,7 +33,7 @@ public class WorldTime : MonoBehaviour
 
         if (beginTime == endTime)
         {
-            if (eyeInfo.timeEyesAreClosed >= 120)
+            if (eyeInfo.timeEyesAreClosed >= 240)
             {
                 Debug.Log("you win");
             }

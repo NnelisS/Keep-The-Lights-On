@@ -17,6 +17,9 @@ public class PlayerMovement : MonoBehaviour
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
 
+    [Header("Sound")]
+    public AudioSource footstepSound;
+
     private Vector3 velocity;
     private bool isGrounded;
 
@@ -28,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         GroundCheck();
+        MoveCheck();
 
         // get input axis
         float x = Input.GetAxis("Horizontal");       
@@ -38,6 +42,18 @@ public class PlayerMovement : MonoBehaviour
 
         // use character controller to move around
         controller.Move(move * speed * Time.deltaTime);
+    }
+
+    private void MoveCheck()
+    {
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+        {
+            footstepSound.enabled = true;
+        }
+        else
+        {
+            footstepSound.enabled = false;
+        }
     }
 
     #region GroundCheck

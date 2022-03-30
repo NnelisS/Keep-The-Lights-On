@@ -20,6 +20,11 @@ public class Lamp : MonoBehaviour
     public bool destroyLamp = false;
     public bool chosenIfDestroy = true;
 
+    [Header("Sound")]
+    public AudioSource lightTurnOff;
+    public AudioSource lightTurnOn;
+    public AudioSource lightBreak;
+
     public float timerUntillKill;
 
     private RandomizeSytem randomizeSystem;
@@ -39,6 +44,7 @@ public class Lamp : MonoBehaviour
     {
         if (!lamp.activeInHierarchy)
         {
+            StartCoroutine(LightTurnOff());
             timerUntillKill += Time.deltaTime;
             if (chosenIfDestroy)
             {
@@ -58,6 +64,7 @@ public class Lamp : MonoBehaviour
 
         if (destroyCurrent == 1)
         {
+            StartCoroutine(LightBreak());
             destroyLamp = true;
         }
     }
@@ -90,6 +97,7 @@ public class Lamp : MonoBehaviour
 
             if (!lamp.activeInHierarchy && destroyLamp == false)
             {
+                StartCoroutine(LightTurnOn());
                 lamp.SetActive(true);
                 lampsScript.lamps.Add(lamp);
                 chosenIfDestroy = true;
@@ -97,5 +105,24 @@ public class Lamp : MonoBehaviour
                 randomizeSystem.events.Add(this.GetComponent<Events>());
             }
         }
+    }
+
+    private IEnumerator LightTurnOn()
+    {
+        lightTurnOn.enabled = true;
+        yield return new WaitForSeconds(1);
+        lightTurnOn.enabled = false;
+    }
+    private IEnumerator LightTurnOff()
+    {
+        lightTurnOff.enabled = true;
+        yield return new WaitForSeconds(1);
+        lightTurnOff.enabled = false;
+    }
+    private IEnumerator LightBreak()
+    {
+        lightBreak.enabled = true;
+        yield return new WaitForSeconds(1);
+        lightBreak.enabled = false;
     }
 }
