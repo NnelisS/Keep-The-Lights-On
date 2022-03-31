@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Bed : MonoBehaviour
 {
@@ -38,6 +39,7 @@ public class Bed : MonoBehaviour
     public AudioSource blanketBreath;
     public AudioSource lastBreath;
     public AudioSource underBlanketAudio;
+    public Animator ambient;
 
     private bool getIntoBed = false;
     private bool inBed = false;
@@ -78,9 +80,9 @@ public class Bed : MonoBehaviour
         }
         if (timeUnderBlanket >= 9)
         {
+            StartCoroutine(BlanketKill());
             blanketBreath.enabled = false;
             Debug.Log("Ur DED blanket");
-            mouseLook.enabled = false;
             usable = false;
 
         }
@@ -325,6 +327,16 @@ public class Bed : MonoBehaviour
         usable = true;
         yield return new WaitForSeconds(1);
         underBlanketAudio.enabled = false;
+    }
+
+    private IEnumerator BlanketKill()
+    {
+        fade.Play("Dead");
+        ambient.Play("Ambient Fade");
+        playerMovement.enabled = false;
+        mouseLook.enabled = false;
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene("YouLoseBlanket");
     }
     #endregion
 }

@@ -26,4 +26,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Niels/Scenes/YouLoseBlanket.unity
     guid: 08f47bf4a19c39645bcb1c6ffa0836d5
+  - enabled: 1
+    path: Assets/Niels/Scenes/YouLoseLightingg.unity
+    guid: 32df271ee41aedb4e8afe3370a5ae786
+  - enabled: 1
+    path: Assets/Niels/Scenes/YouLoseLightingText.unity
+    guid: 52a4062d836fc4a4f949a3a5b2d3ad6c
   m_configObjects: {}

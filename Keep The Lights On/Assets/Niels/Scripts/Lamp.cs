@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Lamp : MonoBehaviour
 {
@@ -54,6 +55,7 @@ public class Lamp : MonoBehaviour
 
             if (timerUntillKill >= 25)
             {
+                SceneManager.LoadScene("YouLoseLighting");
                 Debug.Log("Ur DED Lamp");
             }
         }

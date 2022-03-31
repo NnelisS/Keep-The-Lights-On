@@ -175,6 +175,9 @@ MonoBehaviour:
   destroyCurrent: 0
   destroyLamp: 0
   chosenIfDestroy: 1
+  lightTurnOff: {fileID: 0}
+  lightTurnOn: {fileID: 0}
+  lightBreak: {fileID: 0}
   timerUntillKill: 0
 --- !u!65 &5680335
 BoxCollider:
@@ -11534,6 +11537,9 @@ MonoBehaviour:
   destroyCurrent: 0
   destroyLamp: 0
   chosenIfDestroy: 1
+  lightTurnOff: {fileID: 0}
+  lightTurnOn: {fileID: 0}
+  lightBreak: {fileID: 0}
   timerUntillKill: 0
 --- !u!65 &145918941
 BoxCollider:
@@ -18988,6 +18994,9 @@ MonoBehaviour:
   destroyCurrent: 0
   destroyLamp: 0
   chosenIfDestroy: 1
+  lightTurnOff: {fileID: 0}
+  lightTurnOn: {fileID: 0}
+  lightBreak: {fileID: 0}
   timerUntillKill: 0
 --- !u!65 &403966047
 BoxCollider:
@@ -53071,6 +53080,9 @@ MonoBehaviour:
   destroyCurrent: 0
   destroyLamp: 0
   chosenIfDestroy: 1
+  lightTurnOff: {fileID: 0}
+  lightTurnOn: {fileID: 0}
+  lightBreak: {fileID: 0}
   timerUntillKill: 0
 --- !u!65 &1367755954
 BoxCollider:
@@ -61541,6 +61553,7 @@ MonoBehaviour:
   flashlight: {fileID: 53008114145703358}
   hand: {fileID: 594608462}
   handAnim: {fileID: 594608464}
+  footstep: {fileID: 0}
   cameraChanger: {fileID: 631526585}
   camName: Cam 4
   leftCloth: {fileID: 1961478952}
@@ -61551,6 +61564,7 @@ MonoBehaviour:
   monster: {fileID: 184482713}
   animIn: MonsterWindowRight
   animOut: MonsterWindowRightLeave
+  windowOpen: {fileID: 0}
   movementEnabled: 0
 --- !u!54 &1710397274
 Rigidbody:
@@ -62972,6 +62986,10 @@ PrefabInstance:
       propertyPath: eyeFade
       value: 
       objectReference: {fileID: 786378094}
+    - target: {fileID: 4126005427288612278, guid: 8a5a5cb9743ce604185a4b8f92f3d197, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4206861251178698150, guid: 8a5a5cb9743ce604185a4b8f92f3d197, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.136
@@ -86233,6 +86251,7 @@ MonoBehaviour:
   playerMovement: {fileID: 1921403162}
   mouseLook: {fileID: 651623298}
   furLight: {fileID: 336690227758735572}
+  footstep: {fileID: 0}
   mainCamera: {fileID: 346917304}
   fade: {fileID: 459271742}
   cameraChanger: {fileID: 631526585}
@@ -86240,6 +86259,12 @@ MonoBehaviour:
   bedSheet: {fileID: 3995205807874497276}
   timeUnderBlanket: 0
   bedIcon: {fileID: 2080216175}
+  underBlanketP: {fileID: 0}
+  underBlanketAnim: {fileID: 0}
+  blanketBreath: {fileID: 0}
+  lastBreath: {fileID: 0}
+  underBlanketAudio: {fileID: 0}
+  ambient: {fileID: 0}
   underBlanket: 0
 --- !u!1 &3995205807874497279
 GameObject:
@@ -86922,6 +86947,8 @@ MonoBehaviour:
   timerUntillKill: 0
   timerUntillLeave: 0
   current: 0
+  doorCreak: {fileID: 0}
+  monsterBreath: {fileID: 0}
 --- !u!114 &4820851767842726583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90563,6 +90590,7 @@ MonoBehaviour:
   flashlight: {fileID: 53008114145703358}
   hand: {fileID: 142790030378478283}
   handAnim: {fileID: 142790030378478284}
+  footstep: {fileID: 0}
   cameraChanger: {fileID: 631526585}
   camName: Cam 3
   leftCloth: {fileID: 5312134612707318533}
@@ -90573,6 +90601,7 @@ MonoBehaviour:
   monster: {fileID: 1918735463}
   animIn: MonsterWindowLeft
   animOut: MonsterWindowLeftLeave
+  windowOpen: {fileID: 0}
   movementEnabled: 0
 --- !u!54 &6403374784326874284
 Rigidbody:

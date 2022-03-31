@@ -20354,7 +20354,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 488252918}
-  m_LocalRotation: {x: -0.014017428, y: 0.69520885, z: 0.013562223, w: 0.7185431}
+  m_LocalRotation: {x: -0.01401743, y: 0.69520885, z: 0.013562225, w: 0.7185431}
   m_LocalPosition: {x: 7.5350113, y: 1.0654985, z: -0.09738934}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -55563,7 +55563,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1395950802}
-  m_LocalRotation: {x: -7.364338e-16, y: -0.6959756, z: -7.1377884e-16, w: 0.71806544}
+  m_LocalRotation: {x: 7.364338e-16, y: -0.6959756, z: 7.1377884e-16, w: 0.71806544}
   m_LocalPosition: {x: -7.186, y: 1.1568223, z: -0.08099999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -89024,6 +89024,7 @@ MonoBehaviour:
   blanketBreath: {fileID: 417775687}
   lastBreath: {fileID: 827698175}
   underBlanketAudio: {fileID: 3995205807874497281}
+  ambient: {fileID: 919100094}
   underBlanket: 0
 --- !u!1 &3995205807874497279
 GameObject:

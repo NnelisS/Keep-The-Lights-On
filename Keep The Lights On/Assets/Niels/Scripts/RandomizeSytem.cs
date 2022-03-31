@@ -57,27 +57,27 @@ public class RandomizeSytem : MonoBehaviour
     {
         if (timerUntillDifficultChange == 0)
         {
-            timerChange = Random.Range(50, 60);
+            timerChange = Random.Range(25, 60);
         }          
         
         if (timerUntillDifficultChange == 120)
         {
-            timerChange = Random.Range(45, 50);
+            timerChange = Random.Range(25, 50);
         }   
         
         if (timerUntillDifficultChange == 240)
         {
-            timerChange = Random.Range(40, 45);
+            timerChange = Random.Range(25, 45);
         } 
         
         if (timerUntillDifficultChange == 360)
         {
-            timerChange = Random.Range(35, 40);
+            timerChange = Random.Range(25, 40);
         }
         
         if (timerUntillDifficultChange == 480)
         {
-            timerChange = Random.Range(30, 35);
+            timerChange = Random.Range(25, 35);
         } 
         
         if (timerUntillDifficultChange == 600)
