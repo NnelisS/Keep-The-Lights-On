@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class LightCutscene : MonoBehaviour
 {
-    public Animator ambient;
     private float timer = 36.50f;
 
     void Start()
@@ -24,7 +23,6 @@ public class LightCutscene : MonoBehaviour
 
     private IEnumerator CloseCutscene()
     {
-        ambient.Play("Ambient Fade");
         yield return new WaitForSeconds(2);
         SceneManager.LoadScene("YouLoseLightingText");
     }

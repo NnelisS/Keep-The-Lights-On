@@ -55,7 +55,7 @@ public class Lamp : MonoBehaviour
 
             if (timerUntillKill >= 25)
             {
-                SceneManager.LoadScene("YouLoseLighting");
+                SceneManager.LoadScene("YouLoseLightingg");
                 Debug.Log("Ur DED Lamp");
             }
         }

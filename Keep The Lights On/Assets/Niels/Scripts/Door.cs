@@ -1,11 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Door : MonoBehaviour
 {
     [Header("Bed Info")]
     public Bed bedInfo;
+
+    [Header("Kill")]
+    public Animator fade;
+    public Animator ambient;
+    public Animator monster;
 
     private Animator door;
     public bool activateDoorOpen = false;
@@ -87,6 +93,7 @@ public class Door : MonoBehaviour
         if (timerUntillKill >= 20)
         {
             timerUntillKill = 0;
+            StartCoroutine(DoorKill());
             Debug.Log("ur DED");
         }
     }
@@ -96,5 +103,14 @@ public class Door : MonoBehaviour
         doorCreak.enabled = true;
         yield return new WaitForSeconds(6);
         doorCreak.enabled = false;
-    }    
+    }   
+    
+    private IEnumerator DoorKill()
+    {
+        monster.Play("MonsterFade");
+        fade.Play("Dead");
+        ambient.Play("Ambient Fade");
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene("YouLoseDoor");
+    }
 }
