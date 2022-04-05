@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Cinemachine;
 
 public class PlayerLive : MonoBehaviour
 {
@@ -20,6 +21,11 @@ public class PlayerLive : MonoBehaviour
     public AudioSource lastBreath;
     public Animator ambient;
 
+    [Header("Jumpscare")]
+    public GameObject jumpscare;
+    public GameObject maincamera;
+    public CinemachineBrain maincameraBrain;
+
     public bool timerOn = false;
     public bool usable = false;
     public bool oneTime = false;
@@ -31,6 +37,7 @@ public class PlayerLive : MonoBehaviour
 
         if (timerOn)
         {
+            playerMovement.speed = Mathf.Lerp(playerMovement.speed, 0f, 0.5f * Time.deltaTime);
             heartBeat.enabled = true;
             timer += Time.deltaTime;
             usable = true;
@@ -42,12 +49,12 @@ public class PlayerLive : MonoBehaviour
                 StartCoroutine(EndGame());
                 heartBeat.enabled = false;
                 lastBreath.enabled = true;
-                eyeFade.Play("Dead");
                 Debug.Log("Ur DED path");
             }
         }
         else if (timerOn == false && usable == true)
         {
+            playerMovement.speed = Mathf.Lerp(playerMovement.speed, 2, 0.5f * Time.deltaTime);
             timer -= Time.deltaTime;
         }
 
@@ -141,6 +148,10 @@ public class PlayerLive : MonoBehaviour
         playerMovement.enabled = false;
         mouseLook.enabled = false;
         yield return new WaitForSeconds(2);
+        maincameraBrain.enabled = false;
+        maincamera.SetActive(false);
+        jumpscare.SetActive(true);
+        yield return new WaitForSeconds(6f);
         SceneManager.LoadScene("YouLoseFootstep");
     }
 }

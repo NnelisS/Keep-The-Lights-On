@@ -6,9 +6,11 @@ public class ToWindow : MonoBehaviour
 {
     [Header("Window Info")]
     public Window window;
+    public MouseLook mouseLook;
 
     private void OnMouseDown()
     {
+        mouseLook.enabled = false;
         StartCoroutine(window.GoToWindow());
     }
 }

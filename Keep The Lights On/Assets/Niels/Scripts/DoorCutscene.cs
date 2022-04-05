@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class DoorCutscene : MonoBehaviour
 {
-    private float timer = 22.70f;
+    private float timer = 25f;
 
     void Start()
     {

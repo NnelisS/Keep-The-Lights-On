@@ -38,4 +38,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Niels/Scenes/YouLoseDoor.unity
     guid: dcb9c69a263bec44eb9d1ecba3ff417d
+  - enabled: 1
+    path: Assets/Niels/Scenes/YouWin.unity
+    guid: d4457a006380fc54fb9f55cccf2d35c3
+  - enabled: 1
+    path: Assets/Niels/Scenes/YouLoseText.unity
+    guid: 6c4b7626272ddb34d9ea02a61596e969
+  - enabled: 1
+    path: Assets/Niels/Scenes/YouWinText.unity
+    guid: 488ae46209cfaf940ad77337f702ec12
+  - enabled: 1
+    path: Assets/Niels/Scenes/Jumpscare.unity
+    guid: 9cdbc9b793ddade4e96a490cec828c5b
   m_configObjects: {}

@@ -20,6 +20,11 @@ public class PlayerMovement : MonoBehaviour
     [Header("Sound")]
     public AudioSource footstepSound;
 
+    [Header("Canvas")]
+    public GameObject tooltipPanel;
+    public GameObject tooltipText;
+    private bool tooltipOpen = false;
+
     private Vector3 velocity;
     private bool isGrounded;
 
@@ -32,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     {
         GroundCheck();
         MoveCheck();
+        ToolTips();
 
         // get input axis
         float x = Input.GetAxis("Horizontal");       
@@ -42,6 +48,29 @@ public class PlayerMovement : MonoBehaviour
 
         // use character controller to move around
         controller.Move(move * speed * Time.deltaTime);
+    }
+
+    private void ToolTips()
+    {
+        if (tooltipOpen == false)
+        {
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                tooltipText.SetActive(false);
+                Time.timeScale = 0.0000001f;
+                tooltipPanel.SetActive(true);
+                tooltipOpen = true;
+            }
+        }
+        else if (tooltipOpen == true)
+        {
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                Time.timeScale = 1f;
+                tooltipPanel.SetActive(false);
+                tooltipOpen = false;
+            }
+        }
     }
 
     private void MoveCheck()

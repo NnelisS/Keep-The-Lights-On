@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class LightCutscene : MonoBehaviour
 {
-    private float timer = 36.50f;
+    private float timer = 42.50f;
 
     void Start()
     {

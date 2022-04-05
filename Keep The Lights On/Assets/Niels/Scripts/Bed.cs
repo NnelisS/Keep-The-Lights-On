@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Cinemachine;
 
 public class Bed : MonoBehaviour
 {
@@ -40,6 +41,14 @@ public class Bed : MonoBehaviour
     public AudioSource lastBreath;
     public AudioSource underBlanketAudio;
     public Animator ambient;
+
+    [Header("Jumpscare")]
+    public GameObject jumpscare;
+    public GameObject maincamera;
+    public CinemachineBrain maincameraBrain;
+
+    [Header("Controls")]
+    public GameObject controlText;
 
     private bool getIntoBed = false;
     private bool inBed = false;
@@ -295,6 +304,7 @@ public class Bed : MonoBehaviour
         flashlight.SetActive(true);
         furLight.SetActive(false);
         yield return new WaitForSeconds(1f);
+        controlText.SetActive(true);
         bedSheet.Play("BedSheetOpenUp");
         playerMovement.enabled = true;
         mouseLook.enabled = true;
@@ -336,6 +346,10 @@ public class Bed : MonoBehaviour
         playerMovement.enabled = false;
         mouseLook.enabled = false;
         yield return new WaitForSeconds(2);
+        maincameraBrain.enabled = false;
+        jumpscare.SetActive(true);
+        maincamera.SetActive(true);
+        yield return new WaitForSeconds(6f);
         SceneManager.LoadScene("YouLoseBlanket");
     }
     #endregion

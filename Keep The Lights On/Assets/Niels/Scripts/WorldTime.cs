@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class WorldTime : MonoBehaviour
@@ -33,9 +34,17 @@ public class WorldTime : MonoBehaviour
 
         if (beginTime == endTime)
         {
-            if (eyeInfo.timeEyesAreClosed >= 240)
+            if (eyeInfo.timeEyesAreClosed >= 120)
             {
                 Debug.Log("you win");
+                PlayerPrefs.SetFloat("TimeEyesAreClosed", eyeInfo.timeEyesAreClosed);
+                SceneManager.LoadScene("YouWin");
+            }
+            if (eyeInfo.timeEyesAreClosed <= 119.99f)
+            {
+                Debug.Log("You Lose");
+                PlayerPrefs.SetFloat("TimeEyesAreClosed", eyeInfo.timeEyesAreClosed);
+                SceneManager.LoadScene("YouLose");
             }
         }
     }

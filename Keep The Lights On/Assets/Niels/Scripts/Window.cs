@@ -150,7 +150,6 @@ public class Window : MonoBehaviour
         hand.SetActive(true);
         cameraChanger.Play(camName);
         flashlight.SetActive(false);
-        playerLook.enabled = false;
         boxCol.enabled = false;
         playermovement.enabled = false;
         yield return new WaitForSeconds(0.5f);
@@ -162,11 +161,11 @@ public class Window : MonoBehaviour
         handAnim.Play(handAnimName);
         cameraChanger.Play("CameraChange");
         movementEnabled = false;
+        flashlight.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         playermovement.enabled = true;
         playerLook.enabled = true;
         boxCol.enabled = true;
-        flashlight.SetActive(true);
         hand.SetActive(false);
     }
 

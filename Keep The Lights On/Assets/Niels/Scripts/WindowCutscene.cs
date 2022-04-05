@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class WindowCutscene : MonoBehaviour
 {
-    private float timer = 30;
+    private float timer = 35;
 
     void Start()
     {
